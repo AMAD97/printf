@@ -1,8 +1,9 @@
+#include <unistd.h>
 #include <stdarg.h>
 #include "main.h"
 
 int write_char(char c) {
-    return write(1, &c, 1);
+    return (write(1, &c, 1));
 }
 
 int write_str(const char *str) {
@@ -10,7 +11,7 @@ int write_str(const char *str) {
     while (str[len] != '\0') {
         len++;
     }
-    return write(1, str, len);
+    return (write(1, str, len));
 }
 
 int write_int(int num)
@@ -18,7 +19,7 @@ int write_int(int num)
     char buffer[20];
     int len = 0;
     int i = 0;
-
+    int start, end;
     if (num < 0)
     {
         write_char('-');
@@ -38,8 +39,8 @@ int write_int(int num)
         i++;
         len++;
     }
-    int start = 0;
-    int end = i - 1;
+    start = 0;
+    end = i - 1; 
     while (start < end)
     {
         char temp = buffer[start];
@@ -51,15 +52,14 @@ int write_int(int num)
 
     buffer[i] = '\0';
 
-    return write(1, buffer, len);
+    return (write(1, buffer, len));
 }
 
 int _printf(const char *format, ...) {
-    va_list args;
-    va_start(args, format);
-
     int chars_written = 0;
     int i = 0;
+    va_list args;
+    va_start(args, format);
 
     while (format[i] != '\0') {
         if (format[i] == '%') {
@@ -92,4 +92,5 @@ int _printf(const char *format, ...) {
     va_end(args);
     return chars_written;
 }
+
 
